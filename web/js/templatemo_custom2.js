@@ -20,7 +20,9 @@ jQuery(document).ready(function($){
 
         $("#menu-container .gallery").addClass("animated fadeInDown").show();
 	$(".main_menu a.templatemo_page2").addClass('active');
-	
+        
+	google.maps.event.addDomListener(window, 'load', initialize1);
+        
         $(".main_menu a.templatemo_page4").click(function(){
 		$("#menu-container .contact").addClass("animated fadeInDown").show();
 		$(this).addClass('active');
@@ -29,7 +31,6 @@ jQuery(document).ready(function($){
                 $(".main_menu a.templatemo_page5").removeClass('active');
 		$(".main_menu a.templatemo_home").removeClass('active');
 		
-		loadScript();
 		return false;
 	});
             
@@ -74,7 +75,6 @@ jQuery(document).ready(function($){
 		return false;
 	});
 
-	loadScript();
 
 	/************** Gallery Hover Effect *********************/
 	$(".overlay").hide();

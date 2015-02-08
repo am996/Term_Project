@@ -3,7 +3,6 @@
     Created on : Jan 29, 2015, 8:37:33 PM
     Author     : Lex
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,8 +28,8 @@
               <div class="collapse navbar-collapse main_menu" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                   <li><a class="show-1 templatemo_home" href="#"><span class="fa fa-home"></span>HOME</a></li>
-                  <li><a class="show-1 templatemo_page2" href="#"><span class="fa fa-picture-o"></span>MAP TALES</a></li>
-                  <li><a class="show-1 templatemo_page3" id="ref" href="#"><span class="fa fa-pencil"></span>CREATE</a></li>
+                  <li><a class="show-1 templatemo_page2" id="ref" href="#"><span class="fa fa-picture-o"></span>MAP TALES</a></li>
+                  <li><a class="show-1 templatemo_page3" id="ref1" href="#"><span class="fa fa-pencil"></span>CREATE</a></li>
                   <li><a class="show-1 templatemo_page4" href="#"><span class="fa fa-flag"></span>PROFILE</a></li>
                 </ul>
               </div>
@@ -40,9 +39,15 @@
           <!-- /.container-fluid --> 
                     </nav>
                 </div>
+                
                 <script>
-                    $('#ref').click(function(e) {
+                    $('#ref1').click(function(e) {
                         initialize();
+                    });
+                   
+                   
+                    $('#ref').click(function(e) {
+                        initialize1();                       
                     });
                     </script>
             </div>

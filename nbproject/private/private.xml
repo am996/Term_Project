@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/MenuL.jsp</file>
-            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/js/templatemo_custom1.js</file>
-            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/profile.jsp</file>
-            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/css/templatemo_style.css</file>
-            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/Create.jsp</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/home.jsp</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/src/java/com/example/web/Update_profile.java</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/src/java/com/example/web/Signup.java</file>
             <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/src/java/com/example/web/Create_story.java</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/build/web/home.jsp</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/build/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/help.jsp</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/src/java/com/example/web/Login.java</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/maptales.jsp</file>
+            <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/src/java/com/example/web/Controller.java</file>
             <file>file:/C:/Users/Lex/Documents/NetBeansProjects/TWorld/web/index.jsp</file>
         </group>
     </open-files>

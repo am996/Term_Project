@@ -798,3 +798,10 @@ h1 {
     border: 1px solid #979797;
     margin-bottom: 50px;
 }
+#map_canvas1{
+    float: left;
+    height: 400px;
+    width: 100%;
+    border: 1px solid #979797;
+    margin-bottom: 50px;
+}

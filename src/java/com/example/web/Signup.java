@@ -47,6 +47,7 @@ public class Signup extends HttpServlet {
         String Address = req.getParameter("address_tw");
         String TravelPal = req.getParameter("TP_tw");
         String FHolidays = req.getParameter("FH_tw");
+        String Fototitle = ("");
         int TP;
         int FH;
         if (TravelPal != null) {
@@ -68,7 +69,7 @@ public class Signup extends HttpServlet {
             ds.setPassword("admin");
             java.sql.Connection connection = ds.getConnection();
             Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO `users`(`Username`, `Password`, `email`, `First_name`, `Last_name`, `Phone_number_1`, `TravelPal`, `FHolidays`, `Address`) VALUES (\""+Username+"\",\""+Password+"\",\""+Email+"\",\""+First_Name+"\",\""+Last_Name+"\",\""+Phone_number+"\",\""+TP+"\",\""+FH+"\",\""+Address+"\")");
+            statement.execute("INSERT INTO `users`(`Username`, `Password`, `email`, `Fototitle`, `First_name`, `Last_name`, `Phone_number_1`, `TravelPal`, `FHolidays`, `Address`) VALUES (\""+Username+"\",\""+Password+"\",\""+Email+"\",\""+Fototitle+"\",\""+First_Name+"\",\""+Last_Name+"\",\""+Phone_number+"\",\""+TP+"\",\""+FH+"\",\""+Address+"\")");
             req.setAttribute("s_page", "1");
             Cookie loginCookie = new Cookie("user",Username);
             loginCookie.setMaxAge(30*60);

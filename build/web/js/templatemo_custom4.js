@@ -29,7 +29,6 @@ jQuery(document).ready(function($){
                 $(".main_menu a.templatemo_page5").removeClass('active');
 		$(".main_menu a.templatemo_home").removeClass('active');
 		
-		loadScript();
 		return false;
 	});
             
@@ -73,8 +72,6 @@ jQuery(document).ready(function($){
 		$(".main_menu a.templatemo_page4").removeClass('active');
 		return false;
 	});
-
-	loadScript();
 
 	/************** Gallery Hover Effect *********************/
 	$(".overlay").hide();

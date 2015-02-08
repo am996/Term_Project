@@ -10,6 +10,21 @@
     
     <servlet-mapping><servlet-name>Signup</servlet-name>
         <url-pattern>/Signup.do</url-pattern>
+    </servlet-mapping> 
+        <servlet><servlet-name>Update_profile</servlet-name>
+            <servlet-class>com.example.web.Update_profile</servlet-class>
+    </servlet>
+    
+    <servlet-mapping><servlet-name>Update_profile</servlet-name>
+        <url-pattern>/Update_profile.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+            <servlet-class>com.example.web.Controller</servlet-class>
+    </servlet>
+    
+    <servlet-mapping><servlet-name>Controller</servlet-name>
+        <url-pattern>/Controller</url-pattern>
     </servlet-mapping>
 
     <servlet><servlet-name>Logout</servlet-name>
@@ -38,17 +53,34 @@
         <url-pattern>/My_first_create_servlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>NewServlet</servlet-name>
+        <servlet-class>com.example.web.NewServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>NewServlet</servlet-name>
+        <url-pattern>/NewServlet.do</url-pattern>
+    </servlet-mapping>
+    
   <resource-ref>
         <description>DB Connection</description>
         <res-ref-name>jdbc/tworld</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
    </resource-ref>
+       <context-param> 
+    <description>Location to store uploaded file</description> 
+    <param-name>file-upload</param-name> 
+    <param-value>
+         /var/lib/tomcat7/webapps/TWorld/images
+     </param-value> 
+    </context-param>
   
     <session-config>
         <session-timeout>
-            30
-        </session-timeout>
+            1 
+       </session-timeout>
     </session-config>
 
 </web-app>

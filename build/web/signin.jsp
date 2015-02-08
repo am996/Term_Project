@@ -68,8 +68,6 @@
                         <td><input type="text" name="phone_tw"> </td> </tr>
                     <tr> <td> Address:</td>
                         <td><input type="text" name="address_tw"> </td> </tr>
-                    <tr> <td> TravelPal member: </td><td><input type="checkbox" name="TP_tw"> </td> </tr>
-                    <tr> <td> FHolidays member: </td><td><input type="checkbox" name="FH_tw"> </td> </tr>
                     <tr> <td><input class="templatemo_hometop_more blue" type="submit" value="Submit"> </td> <td> </td> </tr>
                     </table>
                 </form>

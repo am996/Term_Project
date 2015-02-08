@@ -1,16 +1,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-<sql:setDataSource var="ds" dataSource="jdbc/tworld" />
-<sql:query dataSource="${ds}" sql="select * from story_database order by story_id desc" var="results" />
 <!DOCTYPE html>
 <html>
     <head>
     </head>
     <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+        
+        <%
+            String theuser = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("user")) {
+                        theuser = cookie.getValue();
+                    }
+                }
+            }
+            Object storyid = "0";
+            Object storystep = "1";
+            Object message = "";
+                if (request.getAttribute("message")!=null) {
+                    message= request.getAttribute("message");
+                }
+                if (request.getAttribute("storyid")!=null) {
+                    storyid= request.getAttribute("storyid");
+                    storystep= request.getAttribute("storystep");
+                }
+                pageContext.setAttribute("message", message);
+                pageContext.setAttribute("storyid", storyid);
+                pageContext.setAttribute("storystep", storystep);                
+        %>
     <c:set var="longitude" value="0"/>
     <div id="menu-container">  
     <div class="content about" id="menu-3">
@@ -48,21 +67,18 @@
                             }
                         });
 
-
-                        //                    marker.setMap(map);
-
-                    }
-
-                    //                google.maps.event.addDomListener(window, 'load', initialize);
-
+                                           marker.setMap(map);
+                                           
+                    }                                   
+                                
                 </script>             <div id="map_canvas"></div>
             </div>
-        </div>
-        <div class="col-md-12 templatemo_who">
+        </div></div>
+        <div class="row templatemo_who">   
             <div class="templatemo_about_title">Story step ${storystep}</div>
             <div class="col-md-6">
-                <div class="templatemo_form">            
-                    <FORM ACTION="Create_story" METHOD=POST enctype="multipart/form-data">               
+                <div class="templatemo_form">
+                    <FORM ACTION="Create_story" METHOD=POST enctype="multipart/form-data">
                         <input type="hidden" name="action" value="story_steps">
                         <input type="hidden" name="storyid" value="${storyid}">
                         <input type="hidden" name="storystep" value="${storystep}">
@@ -72,8 +88,12 @@
                         <div class="col-md-6">
                         <div class="templatemo_form">
                         <input size="20" type="hidden" id="latbox" name="lat">
-                        <input size="20" type="hidden" id="lngbox" name="lng">
-                        <input type="file" name="file" placeholder="file size < 3MB" />
+                        <input size="20" type="hidden" id="lngbox" name="lng"> 
+                        <%if (storystep.equals("1")){%>
+                        <input type="hidden" name="first" value="first_step">
+                        <% }%>
+                        <div class="templatemo_about_text"> ${step} file size < 3MB</div>
+                        <input type="file" name="file" />
                         <button class="blue" TYPE=SUBMIT VALUE="  Submit   ">Submit</button>
                     </form>
                     </div>
@@ -87,6 +107,6 @@
         </div> 
         </div>
     </div>
-    </div>
+    
     </body>
 </html>

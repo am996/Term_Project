@@ -16,17 +16,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -66,7 +64,12 @@ public class Create_story extends HttpServlet {
         int f=0;
         String action = "";
         String first = request.getParameter("first");
-        String user = request.getParameter("theuser");
+        String user = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies !=null){
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("user")) user = cookie.getValue();
+        }}
         String title = request.getParameter("title");
         String header = request.getParameter("header");
         String text_field = request.getParameter("text_field");
@@ -85,7 +88,6 @@ public class Create_story extends HttpServlet {
         String driver="com.mysql.jdbc.Driver";
         
         isMultipart = ServletFileUpload.isMultipartContent(request);
-        java.io.PrintWriter out = response.getWriter( );
         if( isMultipart ){
             DiskFileItemFactory factory = new DiskFileItemFactory();
             // maximum size that will be stored in memory
@@ -101,13 +103,14 @@ public class Create_story extends HttpServlet {
 
             try{ 
             // Parse the request to get file items.
-            List fileItems = upload.parseRequest((RequestContext) request);
+            List fileItems = upload.parseRequest(request);
 
             // Process the uploaded file items
             Iterator i = fileItems.iterator();
 
+        
             while ( i.hasNext () ) 
-            {
+            { 
                FileItem fi = (FileItem)i.next();
                if ( !fi.isFormField () )	
                {
@@ -133,7 +136,7 @@ public class Create_story extends HttpServlet {
                        fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                     }
                     fi.write( file ) ;
-                    out.println("Uploaded Filename: " + fileName + "<br>");
+                    System.out.println("Uploaded Filename: " + fileName + "<br>");
                     }else{valid=0;  message= "not a valid image";}
                 }
                }
@@ -154,16 +157,15 @@ public class Create_story extends HttpServlet {
                         } catch (IOException e) { }
                     }
                 }
-                if (f==0) user=sb.toString();
-                else if (f==1) action=sb.toString();
-                else if (f==2) storyid=sb.toString();
-                else if (f==3) storystep=sb.toString();
-                else if (f==4) title=sb.toString();
-                else if (f==5) header=sb.toString();
-                else if (f==6) text_field=sb.toString();
-                else if (f==7) latitude=sb.toString();
-                else if (f==8) longitude=sb.toString();
-                
+                if (f==0) action=sb.toString();
+                else if (f==1) storyid=sb.toString();
+                else if (f==2) storystep=sb.toString();
+                else if (f==3) title=sb.toString();
+                else if (f==4) header=sb.toString();
+                else if (f==5) text_field=sb.toString();
+                else if (f==6) latitude=sb.toString();
+                else if (f==7) longitude=sb.toString();
+                else if (f==8) first=sb.toString();
                 f++;
                
             }
@@ -173,20 +175,18 @@ public class Create_story extends HttpServlet {
               
             } 
         } 
-        
-        request.setAttribute("theuser", user);
         if (latitude==null) latitude="";
         if (latitude.equals("") && first==null){
             
             request.setAttribute("message", "please enter a marker");
             request.setAttribute("storyid", storyid);
-             
+            request.setAttribute("s_page", "3");
             request.setAttribute("storystep", storystep);
-            request.getRequestDispatcher("/story_create.jsp").forward(request,response);
+            request.getRequestDispatcher("/index.jsp").forward(request,response);
         }else if(valid==1) {
         try{
             Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(url+dbName,"alfonsos", "alfonsos1");
+            conn = DriverManager.getConnection(url+dbName,"admin", "admin");
             if (first!=null) {
                 if (first.equals("first_step")) {
                     do{
@@ -198,16 +198,20 @@ public class Create_story extends HttpServlet {
                     
                     int a =count-1;
                     request.setAttribute("storyid", a);
-                    
-                    request.setAttribute("storystep", 1);
+                    storyid=Integer.toString(a);
+                    request.setAttribute("storystep", 2);
+
                 }
-            }else{
+            } 
                 query = "select * from story_database where `story_id`='" + storyid + "' && `step_num`='" + storystep + "' ";
                 Statement st = conn.createStatement();
                 rs = st.executeQuery(query);
-                if (!rs.next()) {
-                    PreparedStatement pst =(PreparedStatement) conn.prepareStatement("insert into `h_vash_mou`.`story_database`(`story_id`, `step_num`, `content`, `latitude`, `longitude`, `title`, `header`, `max_steps`, `username`,`image_name`) values(?,?,?,?,?,?,?,?,?,?)");
 
+                if (!rs.next()) {
+
+                    PreparedStatement pst =(PreparedStatement) conn.prepareStatement("insert into `tworld`.`story_database`(`story_id`, `step_num`, `content`, `latitude`, `longitude`, `title`, `header`, `max_steps`, `username`,`image_name`) values(?,?,?,?,?,?,?,?,?,?)");
+
+                    
                     pst.setInt(1,Integer.parseInt(storyid));  
                     pst.setInt(2,Integer.parseInt(storystep));
                     pst.setString(3,text_field); 
@@ -222,15 +226,15 @@ public class Create_story extends HttpServlet {
                     else
                         pst.setString(10,fileName);
                     pst.executeUpdate();
-                    pst.close();  
+                    pst.close();
 
-                    pst =(PreparedStatement) conn.prepareStatement("UPDATE `h_vash_mou`.`story_database` SET `max_steps` = ? WHERE `story_id` = ?");
+                    pst =(PreparedStatement) conn.prepareStatement("UPDATE `tworld`.`story_database` SET `max_steps` = ? WHERE `story_id` = ?");
                     pst.setInt(1,Integer.parseInt(storystep));
                     pst.setInt(2,Integer.parseInt(storyid));
                     pst.executeUpdate();
                     pst.close(); 
                 }else {
-                    PreparedStatement pst =(PreparedStatement) conn.prepareStatement("UPDATE `h_vash_mou`.`story_database` SET `content`=?, `latitude`=?, `longitude`=?, `title`=?, `header`=?, `max_steps`=?, `username`=? WHERE `story_id` = ? && `step_num`=?");
+                    PreparedStatement pst =(PreparedStatement) conn.prepareStatement("UPDATE `tworld`.`story_database` SET `content`=?, `latitude`=?, `longitude`=?, `title`=?, `header`=?, `max_steps`=?, `username`=? WHERE `story_id` = ? && `step_num`=?");
 
                     
                     pst.setString(1,text_field); 
@@ -247,7 +251,7 @@ public class Create_story extends HttpServlet {
                     pst.executeUpdate();
                     pst.close();  
 
-                    pst =(PreparedStatement) conn.prepareStatement("UPDATE `h_vash_mou`.`story_database` SET `max_steps` = ? WHERE `story_id` = ?");
+                    pst =(PreparedStatement) conn.prepareStatement("UPDATE `tworld`.`story_database` SET `max_steps` = ? WHERE `story_id` = ?");
                     pst.setInt(1,Integer.parseInt(storystep));
                     pst.setInt(2,Integer.parseInt(storyid));
                     pst.executeUpdate();
@@ -256,19 +260,21 @@ public class Create_story extends HttpServlet {
                 request.setAttribute("storyid", storyid);
                 storystep=Integer.toString(Integer.parseInt(storystep)+1);
                 request.setAttribute("storystep", storystep);
-            }
+            
         }catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException ex) {
+            
 //            Logger.getLogger(MySignInServlet.class.getName()).log(Level.SEVERE, null, ex);  
         }   
-        
-        
-        request.getRequestDispatcher("/story_create.jsp").forward(request,response);
+                request.setAttribute("s_page", "3");
+        request.getRequestDispatcher("/index.jsp").forward(request,response);
             
         }else{
             request.setAttribute("storyid", storyid);
             request.setAttribute("message", message);    
             request.setAttribute("storystep", storystep);
-            request.getRequestDispatcher("/story_create.jsp").forward(request,response);
+            
+            request.setAttribute("s_page", "3");
+            request.getRequestDispatcher("/index.jsp").forward(request,response);
         }
     }
 

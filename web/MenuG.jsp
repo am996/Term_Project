@@ -29,8 +29,8 @@
               <div class="collapse navbar-collapse main_menu" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                   <li><a class="show-1 templatemo_home" href="#"><span class="fa fa-home"></span>HOME</a></li>
-                  <li><a class="show-1 templatemo_page2" href="#"><span class="fa fa-picture-o"></span>MAP TALES</a></li>
-                  <li><a class="show-1 templatemo_page3" href="#"><span class="fa fa-users"></span>ABOUT</a></li>
+                  <li><a class="show-1 templatemo_page2" id="ref" href="#"><span class="fa fa-picture-o"></span>MAP TALES</a></li>
+                  <li><a class="show-1 templatemo_page3" href="#"><span class="fa fa-question-circle"></span>HELP</a></li>
                   <li><a class="show-1 templatemo_page4" href="#"><span class="fa fa-sign-in"></span>LOG IN</a></li>
                 </ul>
               </div>
@@ -40,6 +40,11 @@
           <!-- /.container-fluid --> 
                     </nav>
                 </div>
+                <script>
+                    $('#ref').click(function(e) {
+                        initialize1();                       
+                    });
+            </script>
             </div>
    	</div>
         </div>
